@@ -1,0 +1,65 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+
+# Logs
+*.log
+logs/
+*.log.*
+*.out
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Build directories
+build/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Virtual environment
+.venv/
+
+# Compiled source files
+*.o
+*.out
+*.a
+*.so
+*.dll
+*.exe
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Mac system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+.git/
