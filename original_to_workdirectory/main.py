@@ -6,7 +6,7 @@ import datetime
 import shutil
 from pathlib import Path
 
-FORCED_CHECK = False # op True zetten als we toch de laatste periode willen doorlopen, ondanks dat er geen extra commit geweest is
+FORCED_CHECK = True # op True zetten als we toch de laatste periode willen doorlopen, ondanks dat er geen extra commit geweest is
 WEEKS_TO_REVIEW = 3 # Hoeveel weken willen we teruggaan in de commits
 SYNC_GIT_MODIFICATION_TIME = True # vooral nodig indien we de repo opnieuw hebben gecloned
 
@@ -71,6 +71,7 @@ def copy_file_with_folders(src_file, dst_file):
     os.makedirs(dst_dir, exist_ok=True)  # exist_ok=True will not raise an error if the directory already exists
     # Copy the file to the destination directory
     shutil.copy2(src_file, dst_file) # copy 2 preserves metadata (timestamps)
+    print(f'{src_file}->{dst_file}')
 
 # Checken of er nieuwe wijzigingen zijn in de original repo, als die er niet zijn moeten we niets doen
 original_repo_changed = git_pull_repo_changed(repo_original)
@@ -98,9 +99,11 @@ if (FORCED_CHECK or original_repo_changed):
 
     # de gewijzigde files copieren naar onze workdir
     for filename in files_changed:
+        print(f'for filename {filename}')
         filename_cleaned = bytes(filename.strip('"'), 'utf-8').decode('unicode_escape').replace('Ã«','ë') # vieze dingen omdat hij ë verkeerd escaped/decoded
         full_path_origin = os.path.join(folder_original_parent, main_folder_name, filename_cleaned) 
-        full_path_workdir = os.path.join(folder_workdir_parent, filename_cleaned)
+        full_path_workdir = os.path.join(folder_workdir_parent, main_folder_name, filename_cleaned)
+        print(f'for full_path_workdir {full_path_workdir} - {os.path.exists(full_path_workdir)}')
 
         if (os.path.exists(full_path_origin) and not os.path.exists(full_path_workdir)): # file exists in origin but not in workdir
             copy_file_with_folders(full_path_origin, full_path_workdir)
